@@ -1,7 +1,9 @@
+using CodeFirstApi.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,6 +34,13 @@ namespace CodeFirstApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CodeFirstApi", Version = "v1" });
             });
+
+            // Criar os services.AddScoped dos repositórios
+
+            services.AddDbContext<CodeFirstContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("CodeFirst"))
+            );
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
